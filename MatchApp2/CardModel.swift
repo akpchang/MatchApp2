@@ -14,11 +14,19 @@ class CardModel {
         
         // Declare an empty array to store all the cards
         var generatedCards = [Card]()
+        var usedNumbers = [Int]()
         
-        // Randomly generate 8 pairs of cards
-        for _ in 1...8 {
+        // Randomly generate 8 unique pairs of cards
+        while generatedCards.count < 16 {
+            
             // Generate a random number
             let randomNumber = Int.random(in: 1...13)
+            
+            if usedNumbers.contains(randomNumber){
+                continue
+            } else {
+                usedNumbers += [randomNumber]
+            }
             
             // Create two new card objects
             let cardOne = Card()
@@ -28,9 +36,10 @@ class CardModel {
             cardOne.imageName = "card\(randomNumber)"
             cardTwo.imageName = "card\(randomNumber)"
             
-            // Add them to the array
+            // Add them to the array, if that card pair isn't already in the array
             generatedCards += [cardOne, cardTwo]
             
+            print(randomNumber)
         }
         
         // Randomize the cards within the array
