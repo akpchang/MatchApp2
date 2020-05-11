@@ -21,6 +21,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var milliseconds: Int = 10 * 1000
     
     var firstFlippedCardIndex: IndexPath?
+    
+    var soundPlayer = SoundManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +36,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         // Initialize the timer
         timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerFired), userInfo: nil, repeats: true)
+        // Put the timer on a background thread
+        RunLoop.main.add(timer!, forMode: .common)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        // Play shuffle sound
+        soundPlayer.playSound(effect: .shuffle)
+        
+    }
+    
     
     // MARK: - Timer Methods
     
@@ -51,7 +63,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             timerLabel.textColor = UIColor.red
             timer?.invalidate()
             
-            // TODO: Check if the user has cleared all the pairs
+            // Check if the user has cleared all the pairs
+            checkForGameEnd()
+            
+            
         }
     }
 
@@ -92,6 +107,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        // Check if there's any time remaining, don't let the user interact if the time is 0
+        if milliseconds <= 0 {
+            return
+        }
+        
         // Get a reference to the cell that was tapped
         let cell = collectionView.cellForItem(at: indexPath) as? CardCollectionViewCell
         
@@ -100,6 +120,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             
             // Flip the card up
             cell?.flipUp()
+            
+            // Play cardflip sound
+            soundPlayer.playSound(effect: .flip)
             
             // Check if this is the first card flipped up or second
             if firstFlippedCardIndex == nil {
@@ -133,6 +156,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if cardOne.imageName == cardTwo.imageName {
             
             // It's a match!
+            // Play match sound
+            soundPlayer.playSound(effect: .match)
+            
             // Set the status and remove them
             cardOne.isMatched = true
             cardTwo.isMatched = true
@@ -140,9 +166,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             cardOneCell?.remove()
             cardTwoCell?.remove()
             
+            // Was that the last pair?
+            checkForGameEnd()
+            
         } else {
             
             // It's not a match
+            // Play noMatch sound
+            soundPlayer.playSound(effect: .noMatch)
+            
             cardOne.isFlipped = false
             cardTwo.isFlipped = false
             
@@ -156,5 +188,50 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         firstFlippedCardIndex = nil
         
     }
+    
+    func checkForGameEnd() {
+        
+        // Check for any unmatched cards
+        // Assume the user has won, loop through all the cards to see if they all have a match
+        var hasWon = true
+        
+        for card in cardsArray {
+            
+            if card.isMatched == false {
+                // We found a card is unmatched
+                hasWon = false
+                break
+            }
+        }
+        
+        if hasWon == true {
+            // User has won, show alert
+            showAlert(title: "Congratulations!", message: "You've won the game!")
+            
+        } else {
+            // User hasn't won yet, check if there's any time left
+            if milliseconds <= 0 {
+                showAlert(title: "Time's up!", message: "Sorry, better luck next time!")
+            }
+            
+        }
+        
+    }
+    
+    func showAlert(title: String, message: String) {
+        
+        // Create the alert
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        // Add buttons for the user to dismiss it
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        
+        // Show the alert
+        alert.addAction(okAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
 }
 
