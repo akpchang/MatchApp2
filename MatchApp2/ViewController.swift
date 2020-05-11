@@ -10,10 +10,15 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    @IBOutlet weak var timerLabel: UILabel!
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     let model = CardModel()
     var cardsArray = [Card]()
+    
+    var timer: Timer?
+    var milliseconds: Int = 10 * 1000
     
     var firstFlippedCardIndex: IndexPath?
 
@@ -26,10 +31,33 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Set the view controller as the datasource and delegate of the collection view
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        // Initialize the timer
+        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerFired), userInfo: nil, repeats: true)
+    }
+    
+    // MARK: - Timer Methods
+    
+    @objc func timerFired() {
+        // Decrement the counter
+        milliseconds -= 1
+        
+        // Update the label
+        let seconds: Double = Double(milliseconds) / 1000.0
+        timerLabel.text = String(format: "Time Remaining: %.2f", seconds)
+    
+        // Stop the timer if it reaches 0
+        if milliseconds == 0 {
+            timerLabel.textColor = UIColor.red
+            timer?.invalidate()
+            
+            // TODO: Check if the user has cleared all the pairs
+        }
     }
 
     
     // MARK: - Collection View Delegate Methods
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         // Return number of cards
