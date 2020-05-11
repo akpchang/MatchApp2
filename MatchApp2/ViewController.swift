@@ -18,7 +18,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var cardsArray = [Card]()
     
     var timer: Timer?
-    var milliseconds: Int = 10 * 1000
+    var milliseconds: Int = 30 * 1000
     
     var firstFlippedCardIndex: IndexPath?
     
@@ -207,6 +207,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if hasWon == true {
             // User has won, show alert
             showAlert(title: "Congratulations!", message: "You've won the game!")
+            // Stop the timer at the time the user won
+            timer?.invalidate()
             
         } else {
             // User hasn't won yet, check if there's any time left
