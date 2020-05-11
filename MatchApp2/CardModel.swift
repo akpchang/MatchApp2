@@ -22,6 +22,7 @@ class CardModel {
             // Generate a random number
             let randomNumber = Int.random(in: 1...13)
             
+            // Append random number to usedNumbers array to mark it as used
             if usedNumbers.contains(randomNumber){
                 continue
             } else {
@@ -39,6 +40,7 @@ class CardModel {
             // Add them to the array, if that card pair isn't already in the array
             generatedCards += [cardOne, cardTwo]
             
+            // Log random number in the console
             print(randomNumber)
         }
         

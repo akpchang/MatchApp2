@@ -15,6 +15,7 @@
 		7FE7C6222464E39800AB44A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FE7C6202464E39800AB44A0 /* LaunchScreen.storyboard */; };
 		7FE7C64A246669F100AB44A0 /* CardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE7C649246669F100AB44A0 /* CardModel.swift */; };
 		7FE7C64C24666AC200AB44A0 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE7C64B24666AC200AB44A0 /* Card.swift */; };
+		7FE7C64E2466878F00AB44A0 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE7C64D2466878F00AB44A0 /* CardCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		7FE7C6232464E39800AB44A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FE7C649246669F100AB44A0 /* CardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModel.swift; sourceTree = "<group>"; };
 		7FE7C64B24666AC200AB44A0 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		7FE7C64D2466878F00AB44A0 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				7FE7C6152464E39700AB44A0 /* AppDelegate.swift */,
 				7FE7C6172464E39700AB44A0 /* SceneDelegate.swift */,
 				7FE7C6192464E39700AB44A0 /* ViewController.swift */,
+				7FE7C64D2466878F00AB44A0 /* CardCollectionViewCell.swift */,
 				7FE7C649246669F100AB44A0 /* CardModel.swift */,
 				7FE7C64B24666AC200AB44A0 /* Card.swift */,
 				7FE7C61B2464E39700AB44A0 /* Main.storyboard */,
@@ -148,6 +151,7 @@
 				7FE7C64A246669F100AB44A0 /* CardModel.swift in Sources */,
 				7FE7C64C24666AC200AB44A0 /* Card.swift in Sources */,
 				7FE7C6162464E39700AB44A0 /* AppDelegate.swift in Sources */,
+				7FE7C64E2466878F00AB44A0 /* CardCollectionViewCell.swift in Sources */,
 				7FE7C6182464E39700AB44A0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
